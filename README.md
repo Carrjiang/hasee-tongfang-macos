@@ -5,12 +5,13 @@
 
 适用于神舟战神、机械革命等品牌 7/8/9 代同方机型安装 macOS 的 OpenCore 配置文件
 
-<img src="https://img.shields.io/travis/com/kirainmoe/hasee-tongfang-macos/oc-general?style=flat-square&logo=travis"/> <img src="https://img.shields.io/badge/bootloader-OpenCore-lightgrey.svg?style=flat-square&logo=microsoft-edge"/> <img src="https://img.shields.io/badge/support_macOS-11.0.1-9cf.svg?style=flat-square&logo=apple&logoColor=fff"/>  <img src="https://img.shields.io/badge/built_by-Yume_Maruyama-ff69b4.svg?style=flat-square"/>
+<img src="https://img.shields.io/travis/com/kirainmoe/hasee-tongfang-macos/oc-general?style=flat-square&logo=travis"/> <img src="https://img.shields.io/badge/bootloader-OpenCore-lightgrey.svg?style=flat-square&logo=microsoft-edge"/> <img src="https://img.shields.io/badge/support_macOS-11.1-9cf.svg?style=flat-square&logo=apple&logoColor=fff"/>  <img src="https://img.shields.io/badge/built_by-Yume_Maruyama-ff69b4.svg?style=flat-square"/>
 
 
 <h3>
     <a href="https://www.bilibili.com/video/av81263778">安装视频教程</a> | 
     <a href="https://hackintosh.kirainmoe.com">帮助文档</a> |
+    <a href="https://github.com/kirainmoe/hasee-tongfang-macos/blob/oc-general/Docs/FAQ.md">常见问题</a> |
     <a href="https://github.com/kirainmoe/hasee-tongfang-macos/blob/oc-general/Docs/Changelog.md">更新日志</a> | 
     <a href="https://github.com/kirainmoe/hasee-tongfang-macos/blob/oc-general/README-en.md">English</a>
 </h3>
@@ -91,7 +92,7 @@
 <li>确保你将要安装 macOS 的硬盘上，有一个容量 >= 200M 的 ESP 分区。</li>
 <li>如果你不满足上述两个条件：</li>
     <ul>
-        <li>请先在 PE 环境下，使用 <a href="https://www/disktool.cn">傲梅分区助手</a> 或 <a href="http://diskgenius.cn">DiskGenius</a> 软件，<b>压缩系统分区并创建一个容量 &gt; 200M 的 EFI System Partition 类型分区或 FAT32 类型分区。</b></li>
+        <li>请先在 PE 环境下，使用 <a href="https://www/disktool.cn">傲梅分区助手</a> 或 <a href="http://diskgenius.cn">DiskGenius</a> 软件，<b>压缩 Windows 系统分区并创建一个容量 &gt; 200M 的 EFI System Partition 类型分区或 FAT32 类型分区。</b></li>
         <li>在 PE 环境下，参考 <a href="https://www.cnblogs.com/motoyang/p/6111786.html">此教程</a> 重建 UEFI 引导。</li>
         <li>重启进入 BIOS，在 Boot 选项卡中，将 Boot Mode 改为 "UEFI Mode"，保存并重启系统。</li>
     </ul>
@@ -166,14 +167,14 @@
 
 ### 兼容的系统
 
-当前配置文件的版本是 `20.11.13`，兼容的 macOS 系统版本如下表所示：
+当前配置文件的版本是 `20.12.18`，兼容的 macOS 系统版本如下表所示：
 
 | macOS 版本 | 兼容状态 | 全新安装 | OTA | 已测试最新版本 | 原因 |
 |-------------|--------|---------------|--------|-----------|------|
 | 10.13 High Sierra | ❌ | ❌ | ❌ | 不兼容任何版本 | 10.13 不兼容 `MacBookPro15,3` SMBIOS 和 CoffeeLake CPU 变频 |
 | 10.14 Mojave | ✅ | ✅ |  ✅ | 10.14.6 (18G103) | |
 | 10.15 Catalina | ✅ | ✅ | ✅ | 10.15.7 (19H2) | |
-| 11.0 Big Sur | 💡 | ✅ | ✅ | 11.0.1 (20B29) | 4K 屏幕暂无法在 11.0 下驱动 |
+| 11.0 Big Sur | ✅ | ✅ | ✅ | 11.1 (20C69) | |
 
 如 macOS 后续无破坏 EFI 功能的重要版本系统更新，配置文件将暂停维护。
 
@@ -197,6 +198,8 @@
 </ul>
 
 </details>
+
+> 提示：如果你正在使用同方 QC7 模具的设备，可以尝试[此 EFI](https://github.com/szguomy/hackintosh).
 
 <table>
     <thead>
@@ -278,7 +281,7 @@
 
 # 配置文件概况
 
-- 引导程序为 OpenCore 0.6.3，支持引导 macOS 和 Windows；若需要引导其他操作系统需自行添加。
+- 引导程序为 OpenCore 0.6.4，支持引导 macOS 和 Windows；若需要引导其他操作系统需自行添加。
 
 - 除以下硬件/功能不完美或无法驱动外，其它功能均可正常使用。
   - Intel 蓝牙无法连接部分只支持蓝牙 4.x 的 HID 设备，尤其是部分罗技无线键鼠。
@@ -288,7 +291,6 @@
   - 使用 OpenCore 首次引导 Windows，会导致 Windows 无法从 S4 睡眠（休眠）恢复。
 
 - 支持更换了 4K 屏幕的笔记本。
-  - 由于上游驱动尚未更新，目前 macOS 11.0 Big Sur 暂时无法驱动 4K 屏幕（或只能工作于 48Hz 刷新率模式。
   - 对于 GI5CN54 / GJ5CN64 模具改 4K 屏的用户，**需要先解锁 BIOS 或使用 UEFI Shell** 修改 `DVMT Pre-allocated` 为 `64MB` 以上，具体做法请参考[此文章](Docs/Unlock-CFG-and-DVMT.md)。
 
 - 部分功能如键盘灯控制、Fn 快捷键、双击开关触摸板等需要额外的软件支持，具体请查看详情。
